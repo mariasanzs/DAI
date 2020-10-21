@@ -20,6 +20,7 @@ def inserccion(list):
 
         list[j] = val
 
+
 list = []
 for i in range (8):
     num_aleatorio = random.randint(0,15)
