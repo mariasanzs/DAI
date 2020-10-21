@@ -1,10 +1,10 @@
 #Dockerfile
-FROM python: 3.7-alpine
+FROM python:3.7-alpine
 
 # directorio dentro del contenedor para el código
 WORKDIR /app
 COPY . /app
-RUN pip install -r requiremets.txt
+RUN pip install -r requirements.txt
 
 ENV FLASK_APP app.py
 ENV FLASK_RUN_HOST 0.0.0.0

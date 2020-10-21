@@ -2,8 +2,9 @@
 version: '3.7'
 
 services:
-  contenedor:
-    image: python:3.7-alpine
+  app:
+    build: .
+    ports:
+      - 5000:5000
     volumes:
-     - ./ejercicios:/ejercicios
-    working_dir: /ejercicios
+     - ./app:/app
