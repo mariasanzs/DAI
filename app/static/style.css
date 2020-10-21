@@ -1,0 +1,46 @@
+main {
+	display: flex;
+	justify-content: center;
+}
+
+h1 {
+	font-family: serif;
+	color: #6B8E23;
+	margin: auto;
+	font-size: 5em;
+	text-align: center;
+	}
+
+h2 {
+	font-family: serif;
+	color: #BC8F8F;
+	margin: auto;
+	font-size: 3em;
+	text-align: center;
+}
+
+h3 {
+	font-family: serif;
+	color: #BC8F8F;
+	margin: auto;
+	font-size: 2em;
+	text-align: center;
+}
+
+nav{
+		display:flex;
+		flex-direction:row;
+		align-items:center;
+    list-style-type: none;
+    overflow: hidden;
+}
+
+nav li a:hover{
+    color: #DA70D6;
+}
+
+nav li a{
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
