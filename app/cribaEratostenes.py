@@ -1,6 +1,5 @@
 
 #max = int(input("Introduzca hasta que número quieres buscar primos: "))
-
 def criba(max):
     numeros = set ()
     primos = ''
