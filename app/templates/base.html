@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="María Sanz">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel ="icon logo" href="{{ url_for('static', filename='imgs/logo.png')}}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <img src="{{ url_for('static', filename='imgs/logo.png')}}" alt="Logo" width="100" height="50">
+        <a class="navbar-brand" href="#">Web de María Sanz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ejercicio 1
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="../ejer1-ordena">Ordenación de Matrices Unidimensionales</a>
+                <a class="dropdown-item" href="../ejer2-criba"> Criba de Eratóstenes</a>
+                <a class="dropdown-item" href="../ejer3-fibonnaci">Sucesión de Fibonacci.</a>
+                <a class="dropdown-item" href="../ejer4-balanceo">Balanceo de Cadenas</a>
+                <a class="dropdown-item" href="../ejer5-palabra+mayuscula">Validar Nombre</a>
+                <a class="dropdown-item" href="../ejer6-correo"> Validar Correo Electrónico</a>
+                <a class="dropdown-item" href="../ejer7-tarjetaCredito"> Validar Tarjeta de Crédito</a>
+                <a class="dropdown-item" href="../ejer8-svg"> Imagen SVG dinámica</a>
+              </div>
+            <div>
+          </ul>
+          {% if 'usuario' in session: %}
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mi cuenta
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="../signout">Cerrar Sesión</a>
+                <a class="dropdown-item" href="../miperfil"> Ver mi perfil</a>
+                <a class="dropdown-item" href="../editarperfilform">Editar mi perfil</a>
+              </div>
+          {% else %}
+          <ul class="navbar-nav mr-auto">
+            <li class="boton-item">
+              <a href="./registrarseform">Registrarse</a>
+            </li>
+            <li class="boton-item">
+              <a href="./signinform">Iniciar Sesión</a>
+            </li>
+          </ul>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <main role="main" class="container">
+      {% block content %}
+      {% endblock %}
+    </main>
+    <aside>
+      <div class="container-fluid">
+           <div class="row">
+             <div class="col-md-2 d-none d-md-block bg-light sidebar">
+               <div class="sidebar-sticky">
+                 <h2 class="aside-title"> Historial de páginas visitadas</h2>
+                 <ol class="nav flex-column">
+                  <li>{% block link1 %}{% endblock %}</li>
+                  <li>{% block link2 %}{% endblock %}</li>
+                  <li>{% block link3 %}{% endblock %}</li>
+                </ol>
+               </div>
+             </div>
+        </div>
+      </div>
+    </aside>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">María Sanz Sánchez. <a href="https://github.com/mariasanzs/DAI">Desarrollo de Aplicaciones para Internet</a></span>
+      </div>
+    </footer>
+    <!-- Bootstrap core JavaScript
+   ================================================== -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+   <script src="../../assets/js/vendor/popper.min.js"></script>
+   <script src="../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

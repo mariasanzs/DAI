@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="mt-5">Práctica 3 - DAI </h1>
+    <p>Plantillas, Manejo de Sesiones y Frameworks CSS</p>
+    <p>En esta práctica avanzaremos en el uso de Flask: usaremos un motor de plantillas (templates) Jinja incorporado en Flask, haremos uso de un framework CSS para que el HTML sea adaptable (responsive) utilizaremos sesiones para gestionar la identificación de usuarios en la web y otros posibles datos de sesión de nuestra aplicación web.</p>
+    <p><a class="btn btn-primary btn-lg" href="https://swad.ugr.es/swad/tmp/XN/-IDWuP12qF4PU3MsxNSbHrQbUrW1qIw_X9XP3jlXA/DAI%20Practica%203%20-%20Plantillas_%20Sesiones_%20Frameworks%20CSS.html" role="button">Ir al Guión &raquo;</a></p>
+  </div>
+</div>
+{% endblock %}
+{% block link1 %}
+<a class="nav-link active" href='{{ url[tam-1] }}'>{{ url[tam-1] }}</a>
+{% endblock %}
+{% if tam-2 >= 0: %}
+{% block link2 %}
+<a class="nav-link active" href='{{ url[tam-2] }}'>{{ url[tam-2] }}</a>
+{% endblock %}
+{% endif %}
+{% if tam-3 >= 0: %}
+{% block link3 %}
+<a class="nav-link active" href='{{ url[tam-3] }}'>{{ url[tam-3] }}</a>
+{% endblock %}
+{% endif %}

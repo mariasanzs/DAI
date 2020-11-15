@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+{{ title | safe }}
+{% endblock %}
+{% block content %}
+{% if cadena == '': %}
+<form class="form-inline" action='{{ datos }}'>
+   <h1 class="mt-5"> INSERTE LOS DATOS</h1>
+   <div class="form-group mx-sm-3">
+       <label class="sr-only">Inserte los datos</label>
+       <input type="text" class="form-control" name="datos" id="datos" placeholder="Inserte los datos">
+   </div>
+   <button type="submit" class="btn btn-primary">Realizar Ejercicio</button>
+</form>
+{% else %}
+{{ cadena | safe }}
+{% endif %}
+{% endblock %}
+{% block link1 %}
+<a class="nav-link active" href='{{ url[tam-1] }}'>{{ url[tam-1] }}</a>
+{% endblock %}
+{% if tam-2 >= 0: %}
+{% block link2 %}
+<a class="nav-link active" href='{{ url[tam-2] }}'>{{ url[tam-2] }}</a>
+{% endblock %}
+{% endif %}
+{% if tam-3 >= 0: %}
+{% block link3 %}
+<a class="nav-link active" href='{{ url[tam-3] }}'>{{ url[tam-3] }}</a>
+{% endblock %}
+{% endif %}

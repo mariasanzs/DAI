@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+Sign In
+{% endblock %}
+{% block content %}
+<div class="text-center">
+  <form class="form-signin" method="post" action='{{ accion }}'>
+      <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">{{ msg }}</h1>
+      <label for="inputUsuario" class="sr-only">Usuario</label>
+      <input type="text" name="usuario" value='{{ session['usuario'] }}' id="inputUsuario" class="form-control" placeholder="Usuario" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" value='{{ session['password'] }}' id="inputPassword" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">{{ msgBoton }}</button>
+    </form>
+    <h2 class="msgerror">{{ msgerror }}</h2>
+</div>
+
+{% endblock %}
+{% block link1 %}
+<a class="nav-link active" href='{{ url[tam-1] }}'>{{ url[tam-1] }}</a>
+{% endblock %}
+{% if tam-2 >= 0: %}
+{% block link2 %}
+<a class="nav-link active" href='{{ url[tam-2] }}'>{{ url[tam-2] }}</a>
+{% endblock %}
+{% endif %}
+{% if tam-3 >= 0: %}
+{% block link3 %}
+<a class="nav-link active" href='{{ url[tam-3] }}'>{{ url[tam-3] }}</a>
+{% endblock %}
+{% endif %}
