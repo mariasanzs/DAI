@@ -8,7 +8,11 @@ from fibonacci import *
 from balanceoCadenas import *
 from expresionesRegulares import *
 from svg import *
+from pymongo import MongoClient
 import sys
+
+client = MongoClient("mongo", 27017)
+db = client.SampleCollections
 
 app = Flask(__name__)
 app.secret_key = '/r/xd8}q/xde/x13/xe5F0/xe5/x8b/x96A64'
@@ -21,12 +25,32 @@ def store_visited_urls():
 
 @app.route('/index')
 def index():
-    users = [ 'Rosalia','Adrianna','Victoria' ]
-    if 'usuario' in session:
-        users = [ 'tontaaaa','Adrianna','Victoria' ]
     store_visited_urls()
     tam = len(urls)
-    return render_template('index.html', members=users, url=urls, tam = tam)
+    return render_template('index.html', url=urls, tam = tam)
+
+@app.route('/mongoform')
+def mongoformulario():
+    store_visited_urls()
+    tam = len(urls)
+    return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" )
+
+
+@app.route('/mongo', methods=["GET", "POST"])
+def mongo():
+    store_visited_urls()
+    tam = len(urls)
+    peliculas = db.video_movies.find()
+
+    parametro = request.form['parametro']
+    n_elementos = request.form['n_elementos']
+
+    listaPeliculas = []
+    for pelicula in range(int(n_elementos)):
+        app.logger.debug(peliculas[pelicula])
+        listaPeliculas.append(peliculas[pelicula])
+    return render_template('lista.html', peliculas=listaPeliculas,  parametro=parametro, url=urls, tam = tam)
+
 
 @app.route('/signinform')
 def signinformulario():
@@ -246,12 +270,12 @@ def imprimirpalabraM():
 @app.route('/correo/<cadena>')
 def correoElectronicoValido(cadena):
     print(cadena)
-    msg = '<h1>' + cadena + '</h1>'
+    msg = '<h1 class="mt-5">' + cadena + '</h1>'
     app.logger.debug(cadena)
     if correoValido(cadena):
-        msg += "<h2>Correo aceptado</h2>"
+        msg += '<h2 class="list-group-item">Correo aceptado</h2>'
     else:
-        msg += "<h2>Este correo electrónico no es correcto</h2>"
+        msg += '<h2 class="list-group-item">Este correo electrónico no es correcto</h2>'
     return msg
 
 @app.route('/ejer6-correo')
@@ -271,12 +295,12 @@ def imprimircorreo():
 @app.route('/tarjetaCredito/<cadena>')
 def tarjeraCreditoAceptada(cadena):
     print(cadena)
-    msg = '<h1>' + cadena + '</h1>'
+    msg = '<h1 class="mt-5">' + cadena + '</h1>'
     app.logger.debug(cadena)
     if tarjetaCredito(cadena):
-        msg += "<h2>Tarjeta de crédito aceptada</h2>"
+        msg += '<h2 class="list-group-item" >Tarjeta de crédito aceptada</h2>'
     else:
-        msg += "<h2>Este tarjeta de crédito no es correcta</h2>"
+        msg += '<h2>Este tarjeta de crédito no es correcta</h2>'
     return msg
 
 @app.route('/ejer7-tarjetaCredito')

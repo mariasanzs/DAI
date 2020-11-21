@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+lista
+{% endblock %}
+{% block content %}
+{% if tipo == 'form': %}
+<div class="text-center">
+  <form class="form-signin" method="post" action='{{ accion }}'>
+    <div class="col">
+      <div class="row">
+        <h1 class="h3 mb-3 font-weight-normal">Busca lo que quieras sobre peliculas</h1>
+      </div>
+      <div class="row">
+        <label for="exampleFormControlSelect1">Seleccione que es lo que quiere listar</label>
+         <select class="form-control" id="parametro" name="parametro">
+           <option>title</option>
+           <option>year</option>
+           <option>imdb</option>
+          </select>
+      </div>
+      <div class="row">
+        <label for="exampleFormControlSelect1">¿Cuántos elementos quieres que se muestren?</label>
+        <input type="text" name="n_elementos" id="inputNElementos" class="form-control" placeholder="Número de elementos" required>
+      </div>
+      <div class="row">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+      </div>
+    </div>
+    </form>
+    <h2 class="msgerror">{{ msgerror }}</h2>
+</div>
+{% else %}
+<div>
+    <h1 class="mt-5">Lista de Películas </h1>
+    <ul class="list-group">
+{% for pelicula in peliculas: %}
+      <li class="list-group-item">{{ pelicula._id | safe }} - {{ pelicula[parametro] | safe }}</li>
+{% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}
+{% block link1 %}
+<a class="nav-link active" href='{{ url[tam-1] }}'>{{ url[tam-1] }}</a>
+{% endblock %}
+{% if tam-2 >= 0: %}
+{% block link2 %}
+<a class="nav-link active" href='{{ url[tam-2] }}'>{{ url[tam-2] }}</a>
+{% endblock %}
+{% endif %}
+{% if tam-3 >= 0: %}
+{% block link3 %}
+<a class="nav-link active" href='{{ url[tam-3] }}'>{{ url[tam-3] }}</a>
+{% endblock %}
+{% endif %}
