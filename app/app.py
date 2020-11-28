@@ -33,7 +33,7 @@ def index():
 def mongoformulario():
     store_visited_urls()
     tam = len(urls)
-    return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" )
+    return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo")
 
 
 @app.route('/mongo', methods=["GET", "POST"])
@@ -41,16 +41,55 @@ def mongo():
     store_visited_urls()
     tam = len(urls)
     peliculas = db.video_movies.find()
-
     parametro = request.form['parametro']
     n_elementos = request.form['n_elementos']
 
     listaPeliculas = []
+    if int(n_elementos) > peliculas.count():
+        n_elementos = peliculas.count()
     for pelicula in range(int(n_elementos)):
         app.logger.debug(peliculas[pelicula])
         listaPeliculas.append(peliculas[pelicula])
-    return render_template('lista.html', peliculas=listaPeliculas,  parametro=parametro, url=urls, tam = tam)
+    return render_template('lista.html', peliculas=listaPeliculas, tipo="list", parametro=parametro, url=urls, tam = tam, accion="baseDatos")
 
+@app.route('/baseDatos', methods=["GET", "POST"])
+def basedeDatos():
+    store_visited_urls()
+    tam = len(urls)
+    accion = request.form['accion']
+    if accion == "Editar":
+        nombre_pelicula = request.form['nombre_']
+        year_pelicula = request.form['year_']
+        imdb_pelicula = request.form['imdb_']
+        type_pelicula = request.form['type_']
+        return render_template('lista.html', url=urls, tipo="editar", tam = tam, msgerror="", year_pelicula=year_pelicula ,imdb_pelicula=imdb_pelicula ,type_pelicula=type_pelicula , nombre_pelicula=nombre_pelicula ,accion="baseDatos", boton="editarPelicula")
+    elif accion == "anadirPelicula":
+        return render_template('lista.html', url=urls, tipo="editar", tam = tam, msgerror="", accion="baseDatos", boton="insertarPelicula")
+    elif accion == "insertarPelicula":
+        nombre_e_pelicula = request.form['nombre_e']
+        year_pelicula = request.form['year_']
+        imdb_pelicula = request.form['imdb_']
+        type_pelicula = request.form['type_']
+        id_editar = { 'title' : nombre_e_pelicula , 'year' : year_pelicula, 'imdb' : imdb_pelicula , 'type' : type_pelicula }
+        db.video_movies.insert_one(id_editar)
+        return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" , exito = "si", mensaje="Película Añadida con Éxito")
+    elif accion == "Borrar":
+        nombre_pelicula = request.form['nombre_']
+        id_borrar = { 'title' : nombre_pelicula }
+        db.video_movies.delete_one(id_borrar)
+        return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" , exito = "si", mensaje="Película Borrada con Éxito")
+    elif accion == "editarPelicula":
+        nombre_pelicula = request.form['nombre_']
+        nombre_e_pelicula = request.form['nombre_e']
+        year_pelicula = request.form['year_']
+        imdb_pelicula = request.form['imdb_']
+        type_pelicula = request.form['type_']
+        id_editar = { "$set": { 'title' : nombre_e_pelicula , 'year' : year_pelicula, 'imdb' : imdb_pelicula , 'type' : type_pelicula } }
+        id_anterior = { 'title' : nombre_pelicula }
+        db.video_movies.update_one(id_anterior, id_editar)
+        return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" , exito = "si", mensaje="Película Editada con Éxito")
+    else:
+        return render_template('lista.html', url=urls, tipo="form", tam = tam, msgerror="", accion="mongo" , exito = "no", mensaje="Error realizando esta acción")
 
 @app.route('/signinform')
 def signinformulario():

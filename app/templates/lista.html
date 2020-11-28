@@ -4,6 +4,18 @@ lista
 {% endblock %}
 {% block content %}
 {% if tipo == 'form': %}
+{% if exito == 'si' : %}
+<div class="alert alert-success alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>¡Bien hecho!</strong> {{ mensaje }}
+</div>
+{% endif %}
+{% if exito == 'no' : %}
+<div class="alert alert alert-danger alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>¡Oh, no!</strong> {{ mensaje }}
+</div>
+{% endif %}
 <div class="text-center">
   <form class="form-signin" method="post" action='{{ accion }}'>
     <div class="col">
@@ -23,20 +35,77 @@ lista
         <input type="text" name="n_elementos" id="inputNElementos" class="form-control" placeholder="Número de elementos" required>
       </div>
       <div class="row">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+        <input class="btn btn-lg btn-primary btn-block" type="submit"></input>
       </div>
     </div>
     </form>
     <h2 class="msgerror">{{ msgerror }}</h2>
 </div>
-{% else %}
+{% endif %}
+{% if tipo == 'list': %}
 <div>
     <h1 class="mt-5">Lista de Películas </h1>
-    <ul class="list-group">
+    <div class="row">
+      <form class="form-signin" method="post" action='/baseDatos'>
+        <button class="btn btn-lg btn-primary btn-block" name = "accion" value='anadirPelicula' type="submit">Añadir Película</button>
+      </form>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Pelicula</th>
+          <th scope="col">Borrar</th>
+          <th scope="col">Modificar</th>
+        </tr>
+      </thead>
+      <tbody>
 {% for pelicula in peliculas: %}
-      <li class="list-group-item">{{ pelicula._id | safe }} - {{ pelicula[parametro] | safe }}</li>
+        <tr>
+          <form class="form-signin" method="post" action='{{ accion }}'>
+            <td class="list-group-item">{{ pelicula._id | safe }} - {{ pelicula[parametro] | safe }}</td>
+            <td><input type="submit" class="btn btn-danger" name = "accion" value="Borrar"></input></td>
+            <td><input type="submit" class="btn btn-info" name = "accion" value="Editar"></input></td>
+            <input type="hidden" name="nombre_" value='{{ pelicula.title }}'></input>
+            <input type="hidden" name="year_" value='{{ pelicula.year }}'></input>
+            <input type="hidden" name="imdb_" value='{{ pelicula.imdb }}'></input>
+            <input type="hidden" name="type_" value='{{ pelicula.type }}'></input>
+          </form>
+        </tr>
 {% endfor %}
-    </ul>
+      </tbody>
+    </table>
+</div>
+{% endif %}
+{% if tipo == 'editar': %}
+<div>
+  <form class="form-signin" method="post" action='{{ accion }}'>
+    <div class="col">
+      <div class="row">
+        <h1 class="h3 mb-3 font-weight-normal">Editar Película</h1>
+      </div>
+      <div class="row">
+        <label for="inputTitulo" class="sr-only">Título:</label>
+        <input type="hidden" name="nombre_" value='{{ nombre_pelicula }}'>
+        <input type="text" name="nombre_e" value='{{ nombre_pelicula }}' id="inputTitulo" class="form-control" placeholder="Nombre de la película" required autofocus>
+      </div>
+      <div class="row">
+        <label for="inputYear" class="sr-only">Año:</label>
+        <input type="text" name="year_" value='{{ year_pelicula }}' id="inputYear" class="form-control" placeholder="Año" required autofocus>
+      </div>
+      <div class="row">
+        <label for="inputImdb" class="sr-only">IMDB:</label>
+        <input type="text" name="imdb_" value='{{ imdb_pelicula }}' id="inputImdb" class="form-control" placeholder="Imdb" required autofocus>
+      </div>
+      <div class="row">
+        <label for="inputType" class="sr-only">Tipo:</label>
+        <input type="text" name="type_" value='{{ type_pelicula }}' id="inputType" class="form-control" placeholder="Tipo" required autofocus>
+      </div>
+      <div class="row">
+        <button class="btn btn-lg btn-primary btn-block" name = "accion" value='{{ boton }}' type="submit">Guardar Cambios</button>
+      </div>
+    </div>
+    </form>
 </div>
 {% endif %}
 {% endblock %}
