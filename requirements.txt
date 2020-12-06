@@ -2,3 +2,5 @@
 flask==1.1
 pickleshare
 pymongo
+random-object-id
+flask-restful
